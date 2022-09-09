@@ -1,0 +1,46 @@
+server:
+  port: 8400
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:${DB_NAME:srs_dev_db};DB_CLOSE_ON_EXIT=FALSE
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:sa}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        use_sql_comments: true
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  flyway:
+    locations:
+    - classpath:db/migration/dev
+    enabled: off
+    baseline-on-migrate: off
+
+logging:
+  level:
+    springframework:
+      web: DEBUG
+      data: DEBUG
+    boot:
+      autoconfigure:
+        data:
+          rest: DEBUG
+          jpa: DEBUG
+          orm: DEBUG

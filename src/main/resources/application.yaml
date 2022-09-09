@@ -1,0 +1,22 @@
+app:
+  security:
+    secretKey: ${random_uuid}
+  client:
+      domains: http://localhost:4200
+
+spring:
+  application:
+    name: SRS-APP
+  profiles:
+    active:
+    - ${SPRING_PROFILES_ACTIVE:@activatedProperties@}
+  jpa:
+    open-in-view: false
+  jackson:
+    serialization:
+      indent-output: true
+
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
