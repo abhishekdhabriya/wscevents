@@ -7,6 +7,7 @@ import com.srs.application.repository.CustomerRepository;
 import com.srs.application.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,15 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
 
+    @Autowired
     private final CustomerRepository customerRepository;
-//    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public RegisterResponse register(final RegistrationRequest registrationRequest) {
+        registrationRequest.setPassword(this.passwordEncoder.encode(registrationRequest.getPassword()));
         final var savedCustomer = this.customerRepository.save(CustomerMapper.map(registrationRequest));
         return new RegisterResponse(savedCustomer.getFirstname() + "created successfully");
     }
