@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
  * Defines all constants related to the application
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class AppConstant {
+public final class AppConstants {
 
     /**
      * DateTime custom API formats
@@ -25,5 +25,7 @@ public final class AppConstant {
             "/api/v*/authenticate/**",
             "/api/v*/register/**",
     };
+
+    public static final String API_CONTEXT_V1 = "/api/v1";
 
 }

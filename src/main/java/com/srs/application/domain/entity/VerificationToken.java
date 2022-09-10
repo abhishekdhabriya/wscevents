@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.srs.application.constant.AppConstant;
+import com.srs.application.constant.AppConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,8 +31,8 @@ public class VerificationToken  extends AbstractMappedEntity implements Serializ
     private String token;
 
     @Column(name="expire_date")
-    @JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape= JsonFormat.Shape.STRING)
-    @DateTimeFormat(pattern=AppConstant.LOCAL_DATE_FORMAT)
+    @JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape= JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern= AppConstants.LOCAL_DATE_FORMAT)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using= LocalDateTimeDeserializer.class)
     private LocalDateTime expireData;

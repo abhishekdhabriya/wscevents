@@ -1,6 +1,8 @@
-package com.srs.application.domain.entity;
+package com.srs.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -13,60 +15,40 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
 
-@Entity
-@Table(name = "customers")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class Customer extends AbstractMappedEntity implements Serializable {
+public class CustomerDto extends AbstractMappedDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(message= "firstname should not be blank")
-    @Column(nullable = false)
+    @NotBlank(message = "firstname should not be blank")
     private String firstname;
 
     @NotBlank(message = "lastname should not be blank")
-    @Column(nullable = false)
     private String lastname;
 
-    @Email(message = "email should be in the email format")
-    @NotBlank(message = "Email should not be blank")
-    @Column(nullable = false)
+    @Email(message = "email should be in email format")
+    @NotBlank(message = "email should not be blank")
     private String email;
 
-    @Size(min=8, max=12)
-    @Column(precision = 8, nullable = true)
+    @Size(message = "phone should be in a phone number format", min = 8, max = 12)
     private String phone;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="person_image_id", referencedColumnName = "id")
-    private PersonImage personImage;
-
-    @DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
     @JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
     @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthdate;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="credential_id", referencedColumnName = "id", nullable = false)
-    private Credential credential;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-    private Set<Rating> ratings;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-    private Set<Reservation> reservations;
-
-
+    @JsonProperty("credential")
+    private CredentialDto credentialDto;
 }

@@ -15,58 +15,57 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "customers")
+@Table(name="employees")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class Customer extends AbstractMappedEntity implements Serializable {
+public class Employee extends AbstractMappedEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(message= "firstname should not be blank")
     @Column(nullable = false)
     private String firstname;
 
-    @NotBlank(message = "lastname should not be blank")
     @Column(nullable = false)
     private String lastname;
 
-    @Email(message = "email should be in the email format")
-    @NotBlank(message = "Email should not be blank")
+    @Email(message = "Email should be in email format")
     @Column(nullable = false)
     private String email;
 
-    @Size(min=8, max=12)
+    @Size(message = "Phone must be in phone format")
     @Column(precision = 8, nullable = true)
     private String phone;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="person_image_id", referencedColumnName = "id")
-    private PersonImage personImage;
-
+    @JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape=JsonFormat.Shape.STRING)
     @DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
-    @JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = JsonFormat.Shape.STRING)
     @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthdate;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="user_image_id", referencedColumnName = "id")
+    private PersonImage personImage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manger_id", referencedColumnName = "id", nullable = true)
+    private Employee manager;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "manager")
+    private Set<Employee> workers;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="credential_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "credential_id", referencedColumnName = "id", nullable = true)
     private Credential credential;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
     private Set<Rating> ratings;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-    private Set<Reservation> reservations;
-
-
 }

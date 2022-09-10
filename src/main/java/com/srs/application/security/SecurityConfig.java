@@ -1,6 +1,6 @@
 package com.srs.application.security;
 
-import com.srs.application.constant.AppConstant;
+import com.srs.application.constant.AppConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().disable()
                 .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers(AppConstant.WHITELIST_URLS).permitAll()
+                    .antMatchers(AppConstants.WHITELIST_URLS).permitAll()
+                .antMatchers(AppConstants.API_CONTEXT_V1+ "/register").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .headers()

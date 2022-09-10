@@ -1,6 +1,7 @@
 package com.srs.application.domain.entity;
 
 import com.srs.application.domain.enums.UserRoleBasedAuthority;
+import com.srs.application.domain.listener.CredentialEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "credentials")
+@EntityListeners(CredentialEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -45,6 +47,9 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
     private Customer customer;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+    private Employee employee;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credential")
     private Set<VerificationToken> verificationTokens;
