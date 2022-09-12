@@ -22,8 +22,8 @@ public final class AppConstants {
     public static final String[] WHITELIST_URLS = {
             "/",
             "/h2-console/**",
-            "/api/v*/authenticate/**",
-            "/api/v*/register/**",
+            AppConstants.API_CONTEXT_V1+ "/register/**",
+            AppConstants.API_CONTEXT_V1+ "/authenticate/**"
     };
 
     public static final String API_CONTEXT_V1 = "/api/v1";

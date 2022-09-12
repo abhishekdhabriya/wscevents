@@ -45,10 +45,10 @@ public class Credential extends AbstractMappedEntity implements Serializable {
     @Column(name="is_credentials_non_expired", nullable = false)
     private Boolean isCredentialsNonExpired;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential", optional = false)
     private Customer customer;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential", optional = false)
     private Employee employee;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credential")
