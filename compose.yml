@@ -1,0 +1,23 @@
+
+version: '3.9'
+services:
+  srs-backend-app:
+    image: srs
+    container_name: srs-backend-app
+    ports:
+      - 8400:8400
+    environment:
+      - APP_SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
+    restart: always
+    networks:
+      - net
+networks:
+  net:
+    #driver: bridge
+    name: srs-net
+
+
+
+
+
+
