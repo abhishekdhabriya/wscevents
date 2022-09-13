@@ -1,0 +1,48 @@
+server:
+  port: 8400
+
+app:
+  security:
+    jwt:
+      secret-key: ${APP_SECURITY_JWT_SECRET_KEY:srssecret}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  datasource:
+    url: jdbc:mysql://${SPRING_DATASOURCE_HOST:localhost}:3306/${DB_NAME:srs_integration_db}?createDatabaseIfNotExist=true
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:toor}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        use_sql_comments: true
+        format_sql: true
+  flyway:
+    locations:
+      - classpath:db/migration/dev
+    enabled: off
+    baseline-on-migrate: off
+
+logging:
+  file:
+    name: script/integration_log.log
+  level:
+    springframework:
+      web: DEBUG
+      data: DEBUG
+    boot:
+      autoconfigure:
+        data:
+          rest: DEBUG
+          jpa: DEBUG
+          orm: DEBUG

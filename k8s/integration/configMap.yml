@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: srs-integration-ns
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  namespace: srs-integration-ns
+data:
+  SPRING_PROFILES_ACTIVE: integration
+  MYSQL_DATABASE: srs-integration-db
+  DB_NAME: srs-staging-db
+  MYSQL_ROOT_PASSWORD: c3Jzc2VjcmV0

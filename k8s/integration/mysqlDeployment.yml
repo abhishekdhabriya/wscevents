@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: srs-integration-ns
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: srs-integration-ns
+  labels:
+    app: mysql
+    tier: database
+spec:
+  resources:
+    requests:
+      storage: 300Mi
+  accessModes:
+    - ReadWriteOnce
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: srs-integration-ns
+  labels:
+    app: mysql
+    tier: database
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    app: mysql
+    tier: database
+  clusterIP: None
+
+
+
+
+
