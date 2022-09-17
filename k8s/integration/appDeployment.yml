@@ -16,11 +16,11 @@ spec:
     replicas: 1
     selector:
       matchLabels:
-        app: srs-integration-app
+        app: srs-backend-app
     template:
       metadata:
         labels:
-          app: srs-integration-app
+          app: srs-backend-app
       spec:
         containers:
           - name: srs-integration-app
@@ -30,7 +30,7 @@ spec:
 #                memory: "128Mi"
 #                cpu: "500m"
             ports:
-              - containerPort: 8080
+              - containerPort: 8400
             env:
               - name: APP_SPRING_PROFILES_ACTIVE
                 valueFrom:
@@ -57,7 +57,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 8400
 
 
 
