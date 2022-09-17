@@ -28,7 +28,7 @@ ADD entrypoint.sh $SRS_BIN/entrypoint.sh
 RUN chmod 755 $SRS_BIN/entrypoint.sh
 
 #Expose default servlet container port
-EXPOSE 8400
+EXPOSE 8080
 
 #Main entry point command with arguments
 ENTRYPOINT ["/bin/sh", "/srs/srs/bin/entrypoint.sh"]

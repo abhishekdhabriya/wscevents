@@ -24,13 +24,13 @@ spec:
       spec:
         containers:
           - name: srs-integration-app
-            image: registry.digitalocean.com/srs-app/srs
+            image: registry.digitalocean.com/wscevents/wscevents:latest
 #            resources:
 #              limits:
 #                memory: "128Mi"
 #                cpu: "500m"
             ports:
-              - containerPort: 8400
+              - containerPort: 8080
             env:
               - name: APP_SPRING_PROFILES_ACTIVE
                 valueFrom:
@@ -53,12 +53,11 @@ metadata:
 spec:
   selector:
     app: srs-backend-app
-  type: LoadBalancer
+  type: NodePort
   ports:
     - protocol: TCP
-      port: 8400
-      targetPort: 8400
-      nodePort: 30001
+      port: 80
+      targetPort: 8080
 
 
 

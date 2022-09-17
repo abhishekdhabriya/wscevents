@@ -1,5 +1,5 @@
 server:
-  port: 8400
+  port: 8080
 
 app:
   security:
@@ -14,9 +14,9 @@ management:
 
 spring:
   datasource:
-    url: jdbc:mysql://${SPRING_DATASOURCE_HOST:localhost}:3306/${DB_NAME:srs_integration_db}?createDatabaseIfNotExist=true
-    username: ${SPRING_DATASOURCE_USERNAME:root}
-    password: ${SPRING_DATASOURCE_PASSWORD:toor}
+    url: jdbc:mysql://db-mysql-sfo3-68208-do-user-3594963-0.b.db.ondigitalocean.com:25060/wscevents?createDatabaseIfNotExist=true
+    username: events-admin
+    password: AVNS_LtF9DibUJEIO_j-ZoYX
 
   jpa:
     show-sql: true
